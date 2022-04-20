@@ -97,34 +97,50 @@ export default function ShiftListPage() {
               <th rowSpan="2" className="sticky top-0 left-0">
                 日
               </th>
-              <th rowSpan="2" className="sticky top-0 left-0">
+              <th rowSpan="2" className="sticky top-0 left-12">
                 曜日
               </th>
-              <th colSpan={doctors.length} className="text-center">
+              <th colSpan={doctors.length} className="text-center sticky top-0">
                 Dr
               </th>
-              <th colSpan={trainingDoctor.length} className="text-center">
+              <th colSpan={trainingDoctor.length} className="text-center sticky top-0">
                 研修
               </th>
-              <th colSpan={dentalHygienists.length} className="text-center">
+              <th colSpan={dentalHygienists.length} className="text-center sticky top-0">
                 DH
               </th>
-              <th colSpan={dentalAssistants.length} className="text-center">
+              <th colSpan={dentalAssistants.length} className="text-center sticky top-0">
                 DA
               </th>
             </tr>
-            <tr>
+            <tr className="overflow-auto">
               {doctors.map((doctor) => {
-                return <th key="doctor">{doctor.doctor}</th>
+                return (
+                  <th key="doctor" className="sticky top-12">
+                    {doctor.doctor}
+                  </th>
+                )
               })}
               {trainingDoctor.map((trainingDoctor) => {
-                return <th key="trainingDoctor">{trainingDoctor.doctor}</th>
+                return (
+                  <th key="trainingDoctor" className="sticky top-12">
+                    {trainingDoctor.doctor}
+                  </th>
+                )
               })}
               {dentalHygienists.map((dentalHygienist) => {
-                return <th key="dentalHygienist">{dentalHygienist.hygienist}</th>
+                return (
+                  <th key="dentalHygienist" className="sticky top-12">
+                    {dentalHygienist.hygienist}
+                  </th>
+                )
               })}
               {dentalAssistants.map((dentalAssistant) => {
-                return <th key="dentalAssistant">{dentalAssistant.assistant}</th>
+                return (
+                  <th key="dentalAssistant" className="sticky top-12">
+                    {dentalAssistant.assistant}
+                  </th>
+                )
               })}
             </tr>
           </thead>

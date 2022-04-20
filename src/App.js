@@ -6,6 +6,7 @@ import JobCategoryPage from './home/JobCategoryPage'
 import EmployeePage from './home/EmployeePage'
 import DefaultSettingsPage from './home/DefaultSettingsPage'
 
+
 export default function App() {
   return (
     <>

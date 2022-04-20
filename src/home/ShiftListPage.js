@@ -1,82 +1,156 @@
 import React, { useState, useEffect } from 'react'
 
+const items = [
+  { date: '1', weekDay: '火' },
+  { date: '2', weekDay: '水' },
+  { date: '3', weekDay: '木' },
+  { date: '4', weekDay: '金' },
+  { date: '5', weekDay: '土' },
+  { date: '6', weekDay: '日' },
+  { date: '7', weekDay: '月' },
+  { date: '8', weekDay: '火' },
+  { date: '9', weekDay: '水' },
+  { date: '10', weekDay: '木' },
+  { date: '11', weekDay: '金' },
+  { date: '12', weekDay: '土' },
+  { date: '13', weekDay: '日' },
+  { date: '14', weekDay: '月' },
+  { date: '15', weekDay: '火' },
+  { date: '16', weekDay: '水' },
+  { date: '17', weekDay: '木' },
+  { date: '18', weekDay: '金' },
+  { date: '19', weekDay: '土' },
+  { date: '20', weekDay: '日' },
+  { date: '21', weekDay: '月' },
+  { date: '22', weekDay: '火' },
+  { date: '23', weekDay: '水' },
+  { date: '24', weekDay: '木' },
+  { date: '25', weekDay: '金' },
+  { date: '26', weekDay: '土' },
+  { date: '27', weekDay: '日' },
+  { date: '28', weekDay: '月' },
+  { date: '29', weekDay: '火' },
+  { date: '30', weekDay: '水' },
+  { date: '31', weekDay: '木' },
+]
+
+const doctors = [
+  { doctor: '中野' },
+  { doctor: '遼太郎' },
+  { doctor: '澤木' },
+  { doctor: '藤田' },
+  { doctor: '村田' },
+  { doctor: '柳井' },
+  { doctor: '秋元' },
+  { doctor: '雨宮' },
+  { doctor: '八城' },
+  { doctor: '浅見' },
+  { doctor: '関口' },
+  { doctor: '和泉' },
+  { doctor: '二階堂' },
+  { doctor: '石井' },
+  { doctor: '田中' },
+  { doctor: '大塚' },
+]
+
+const trainingDoctor = [
+  {
+    doctor: '永井',
+  },
+]
+
+const dentalHygienists = [
+  { hygienist: '桐野' },
+  { hygienist: '竹内' },
+  { hygienist: '植木' },
+  { hygienist: '瀬戸' },
+  { hygienist: '大熊' },
+  { hygienist: '湯澤' },
+  { hygienist: '西尾' },
+  { hygienist: '深谷' },
+  { hygienist: '中尾' },
+  { hygienist: '高山' },
+  { hygienist: '高木' },
+]
+
+const dentalAssistants = [
+  { assistant: '有吉' },
+  { assistant: '尾形' },
+  { assistant: '下元' },
+  { assistant: '鈴木' },
+  { assistant: '竹原' },
+  { assistant: '西脇' },
+  { assistant: '田中' },
+  { assistant: '藤澤' },
+  { assistant: '片岡' },
+]
+
+const cleans = [{ clean: '八田' }, { clean: '堀木' }]
+
 export default function ShiftListPage() {
   return (
     <>
-      <div className="overflow-x-auto">
+      <div>
         <table className="table w-full">
           <thead>
+            <tr className="overflow-auto">
+              <th rowSpan="2" className="sticky top-0 left-0">
+                日
+              </th>
+              <th rowSpan="2" className="sticky top-0 left-0">
+                曜日
+              </th>
+              <th colSpan={doctors.length} className="text-center">
+                Dr
+              </th>
+              <th colSpan={trainingDoctor.length} className="text-center">
+                研修
+              </th>
+              <th colSpan={dentalHygienists.length} className="text-center">
+                DH
+              </th>
+              <th colSpan={dentalAssistants.length} className="text-center">
+                DA
+              </th>
+            </tr>
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
+              {doctors.map((doctor) => {
+                return <th key="doctor">{doctor.doctor}</th>
+              })}
+              {trainingDoctor.map((trainingDoctor) => {
+                return <th key="trainingDoctor">{trainingDoctor.doctor}</th>
+              })}
+              {dentalHygienists.map((dentalHygienist) => {
+                return <th key="dentalHygienist">{dentalHygienist.hygienist}</th>
+              })}
+              {dentalAssistants.map((dentalAssistant) => {
+                return <th key="dentalAssistant">{dentalAssistant.assistant}</th>
+              })}
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            <tr className="hover">
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Tax Accountant</td>
-              <td>Red</td>
-            </tr>
+            {items.map((item) => {
+              return (
+                <tr key="item" className="overflow-auto">
+                  <td className="sticky">{item.date}</td>
+                  <td>{item.weekDay}</td>
+                  {doctors.map((doctor) => {
+                    return <td key="doctor"></td>
+                  })}
+                  {trainingDoctor.map((trainingDoctor) => {
+                    return <td key="trainingDoctor"></td>
+                  })}
+                  {dentalHygienists.map((dentalHygienist) => {
+                    return <td key="dentalHygienist"></td>
+                  })}
+                  {dentalAssistants.map((dentalAssistant) => {
+                    return <td key="dentalAssistant"></td>
+                  })}
+                </tr>
+              )
+            })}
           </tbody>
         </table>
-      </div>
-      <div className="modal">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">シフト種別登録</h3>
-          <form className="bg-white rounded px-8 pt-6 pb-8 mb-4">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                シフト種別名
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name"
-                type="text"
-                placeholder="シフト種別名"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                省略文字
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name"
-                type="text"
-                placeholder="省略文字"
-              />
-            </div>
-          </form>
-          <div className="modal-action">
-            <label
-              htmlFor="my-modal"
-              className="btn bg-red-500 border-red-500 hover:border-red-500 hover:bg-red-500"
-            >
-              キャンセル
-            </label>
-            <label
-              htmlFor="my-modal"
-              className="btn bg-blue-500 border-blue-500 hover:border-blue-500 hover:bg-blue-500"
-            >
-              登録
-            </label>
-          </div>
-        </div>
       </div>
     </>
   )

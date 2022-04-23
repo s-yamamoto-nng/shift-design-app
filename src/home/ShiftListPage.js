@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import dayjs from 'dayjs'
+import moment from 'moment'
+import { FaPlus } from 'react-icons/fa'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import ja from 'date-fns/locale/ja'
 
 const items = [
   { date: '1', weekDay: '火' },
@@ -88,16 +93,47 @@ const dentalAssistants = [
 const cleans = [{ clean: '八田' }, { clean: '堀木' }]
 
 export default function ShiftListPage() {
+  const [startDate, setStartDate] = useState(new Date())
+  const { current } = useState(new Date())
+
+  // const date = dayjs(current).startOf('month')
+  // const dateEnd = dayjs(date)
+  const date = moment(current).startOf('month')
+  const dateEnd = moment(date).endOf('month')
+  const dates = []
+  while (date < dateEnd) {
+    const days = []
+    const monthEnd = moment(date).endOf('month')
+    while (date < monthEnd) {
+      days.push(moment(date))
+      date.add(1, 'day')
+    }
+    dates.push(days)
+  }
+  console.log(dates)
+  // console.log(date)
+  // console.log(dateEnd)
+
   return (
     <>
       <div>
+        {/* <DatePicker
+          datepicker
+          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
+          placeholder="Select date"
+          locale="ja"
+          selected={startDate}
+          onChange={(date) => setStartDate(date)}
+          dateFormat="yyyy年MM月"
+          showMonthYearPicker
+        /> */}
         <table className="table w-full">
           <thead>
             <tr className="overflow-auto">
-              <th rowSpan="2" className="sticky top-0 left-0">
+              <td rowSpan="2" className="sticky top-0 left-0 z-20">
                 日
-              </th>
-              <th rowSpan="2" className="sticky top-0 left-12">
+              </td>
+              <th rowSpan="2" className="sticky top-0 left-12 z-20">
                 曜日
               </th>
               <th colSpan={doctors.length} className="text-center sticky top-0">
@@ -112,32 +148,38 @@ export default function ShiftListPage() {
               <th colSpan={dentalAssistants.length} className="text-center sticky top-0">
                 DA
               </th>
+              <th className="sticky top-0" rowSpan="2">
+                その他
+              </th>
+              <th className="sticky top-0" rowSpan="2">
+                日別集計
+              </th>
             </tr>
             <tr className="overflow-auto">
-              {doctors.map((doctor) => {
+              {doctors.map((doctor, idx) => {
                 return (
-                  <th key="doctor" className="sticky top-12">
+                  <td key={idx} className="sticky top-12">
                     {doctor.doctor}
-                  </th>
+                  </td>
                 )
               })}
-              {trainingDoctor.map((trainingDoctor) => {
+              {trainingDoctor.map((trainingDoctor, idx) => {
                 return (
-                  <th key="trainingDoctor" className="sticky top-12">
+                  <th key={idx} className="sticky top-12">
                     {trainingDoctor.doctor}
                   </th>
                 )
               })}
-              {dentalHygienists.map((dentalHygienist) => {
+              {dentalHygienists.map((dentalHygienist, idx) => {
                 return (
-                  <th key="dentalHygienist" className="sticky top-12">
+                  <th key={idx} className="sticky top-12">
                     {dentalHygienist.hygienist}
                   </th>
                 )
               })}
-              {dentalAssistants.map((dentalAssistant) => {
+              {dentalAssistants.map((dentalAssistant, idx) => {
                 return (
-                  <th key="dentalAssistant" className="sticky top-12">
+                  <th key={idx} className="sticky top-12">
                     {dentalAssistant.assistant}
                   </th>
                 )
@@ -145,28 +187,128 @@ export default function ShiftListPage() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => {
+            {items.map((item, idx) => {
               return (
-                <tr key="item" className="overflow-auto">
-                  <td className="sticky">{item.date}</td>
-                  <td>{item.weekDay}</td>
-                  {doctors.map((doctor) => {
-                    return <td key="doctor"></td>
-                  })}
-                  {trainingDoctor.map((trainingDoctor) => {
-                    return <td key="trainingDoctor"></td>
-                  })}
-                  {dentalHygienists.map((dentalHygienist) => {
-                    return <td key="dentalHygienist"></td>
-                  })}
-                  {dentalAssistants.map((dentalAssistant) => {
-                    return <td key="dentalAssistant"></td>
-                  })}
-                </tr>
+                <>
+                  <tr key={idx} className="overflow-auto hover:border-y-blue-400 border-2">
+                    <th className="sticky z-10 border-gray-400 border text-center">{item.date}</th>
+                    <th className="sticky z-10 left-12 border-gray-400 border text-center">
+                      {item.weekDay}
+                    </th>
+                    {doctors.map((doctor, idx) => {
+                      return (
+                        <td key={idx} className="p-0 h-20 border-gray-400 border">
+                          <label
+                            htmlFor="my-modal-1"
+                            className="btn modal-open w-full h-full border-white mt-1.5 bg-white rounded-none hover:border-blue-400 hover:bg-blue-400 cursor-pointer"
+                          ></label>
+                        </td>
+                      )
+                    })}
+                    {trainingDoctor.map((trainingDoctor, idx) => {
+                      return (
+                        <td key={idx} className="p-0 h-20 border-gray-400 border">
+                          <label
+                            htmlFor="my-modal-1"
+                            className="btn modal-open w-full h-full border-white mt-1.5 bg-white rounded-none hover:border-blue-400 hover:bg-blue-400 cursor-pointer"
+                          ></label>
+                        </td>
+                      )
+                    })}
+                    {dentalHygienists.map((dentalHygienist, idx) => {
+                      return (
+                        <td key={idx} className="p-0 h-20 border-gray-400 border">
+                          <label
+                            htmlFor="my-modal-1"
+                            className="btn modal-open w-full h-full border-white mt-1.5 bg-white rounded-none hover:border-blue-400 hover:bg-blue-400 cursor-pointer"
+                          ></label>
+                        </td>
+                      )
+                    })}
+                    {dentalAssistants.map((dentalAssistant, idx) => {
+                      return (
+                        <td key={idx} className="p-0 h-20 border-gray-400 border">
+                          <label
+                            htmlFor="my-modal-1"
+                            className="btn modal-open w-full h-full border-white mt-1.5 bg-white rounded-none hover:border-blue-400 hover:bg-blue-400 cursor-pointer"
+                          ></label>
+                        </td>
+                      )
+                    })}
+                    <td className="p-0 h-20 border-gray-400 border">
+                      <label
+                        htmlFor="my-modal-1"
+                        className="btn modal-open w-full h-full border-white mt-1.5 bg-white rounded-none hover:border-blue-400 hover:bg-blue-400 cursor-pointer"
+                      ></label>
+                    </td>
+                    <td className="p-0 h-20 border-gray-400 border">
+                      <label
+                        htmlFor="my-modal-1"
+                        className="btn modal-open w-full h-full border-white mt-1.5 bg-white rounded-none hover:border-blue-400 hover:bg-blue-400 cursor-pointer"
+                      ></label>
+                    </td>
+                  </tr>
+                  <p></p>
+                </>
               )
             })}
           </tbody>
         </table>
+        <input type="checkbox" id="my-modal-1" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">シフト登録</h3>
+            <form className="bg-white rounded px-8 pt-6 pb-8 mb-4">
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                  シフト登録日付
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="text"
+                  placeholder="シフト登録日付"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                  シフト種別の選択
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="text"
+                  placeholder="シフト種別の選択"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                  置換文字の選択
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="name"
+                  type="text"
+                  placeholder="置換文字の選択"
+                />
+              </div>
+            </form>
+            <div className="modal-action">
+              <label
+                htmlFor="my-modal-1"
+                className="btn bg-red-500 border-red-500 hover:border-red-500 hover:bg-red-500"
+              >
+                キャンセル
+              </label>
+              <label
+                htmlFor="my-modal-1"
+                className="btn bg-blue-500 border-blue-500 hover:border-blue-500 hover:bg-blue-500"
+              >
+                登録
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )

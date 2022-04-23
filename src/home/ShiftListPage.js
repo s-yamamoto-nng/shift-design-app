@@ -90,6 +90,24 @@ const dentalAssistants = [
   { assistant: '片岡' },
 ]
 
+const shiftCategorys = [
+  { category: '休み', repCharacter: 'X' },
+  { category: '受付', repCharacter: '受' },
+  { category: '受付サブ', repCharacter: '受S' },
+  { category: 'DH枠', repCharacter: 'DH' },
+  { category: 'DH枠のサブ', repCharacter: 'DS' },
+  { category: '訪問', repCharacter: '訪' },
+  { category: '予防', repCharacter: '予' },
+  { category: '全体のサブ', repCharacter: 'S' },
+  { category: 'フリー', repCharacter: 'F' },
+  { category: '有給休暇', repCharacter: '有' },
+  { category: '事務日', repCharacter: '事務' },
+  { category: '午前/午後', repCharacter: '/' },
+  { category: '出勤だけど役割はなし', repCharacter: '◯' },
+  { category: '仙川で診療', repCharacter: '仙' },
+  { category: '府中で診療', repCharacter: '府' },
+]
+
 const cleans = [{ clean: '八田' }, { clean: '堀木' }]
 
 export default function ShiftListPage() {
@@ -130,56 +148,68 @@ export default function ShiftListPage() {
         <table className="table w-full">
           <thead>
             <tr className="overflow-auto">
-              <td rowSpan="2" className="sticky top-0 left-0 z-20">
+              <td rowSpan="2" className="sticky top-0 left-0 z-20 bg-blue-500 text-white text-lg">
                 日
               </td>
-              <th rowSpan="2" className="sticky top-0 left-12 z-20">
+              <th rowSpan="2" className="sticky top-0 left-12 z-20 bg-blue-500 text-white text-lg">
                 曜日
               </th>
-              <th colSpan={doctors.length} className="text-center sticky top-0">
+              <th
+                colSpan={doctors.length}
+                className="text-center sticky top-0 bg-blue-500 text-white text-lg"
+              >
                 Dr
               </th>
-              <th colSpan={trainingDoctor.length} className="text-center sticky top-0">
+              <th
+                colSpan={trainingDoctor.length}
+                className="text-center sticky top-0 bg-blue-500 text-white text-lg"
+              >
                 研修
               </th>
-              <th colSpan={dentalHygienists.length} className="text-center sticky top-0">
+              <th
+                colSpan={dentalHygienists.length}
+                className="text-center sticky top-0 bg-blue-500 text-white text-lg"
+              >
                 DH
               </th>
-              <th colSpan={dentalAssistants.length} className="text-center sticky top-0">
+              <th
+                colSpan={dentalAssistants.length}
+                className="text-center sticky top-0 bg-blue-500 text-white text-lg"
+              >
                 DA
               </th>
-              <th className="sticky top-0" rowSpan="2">
+              <th className="sticky top-0 bg-blue-500 text-white text-lg" rowSpan="2">
                 その他
               </th>
-              <th className="sticky top-0" rowSpan="2">
+              <th className="sticky top-0 bg-blue-500 text-white text-lg" rowSpan="2">
                 日別集計
               </th>
             </tr>
             <tr className="overflow-auto">
               {doctors.map((doctor, idx) => {
                 return (
-                  <td key={idx} className="sticky top-12">
+                  <th key={idx} className="sticky top-14 bg-blue-500 text-white text-lg">
                     {doctor.doctor}
-                  </td>
+                  </th>
                 )
               })}
               {trainingDoctor.map((trainingDoctor, idx) => {
                 return (
-                  <th key={idx} className="sticky top-12">
+                  <th key={idx} className="sticky top-14 bg-blue-500 text-white text-lg">
                     {trainingDoctor.doctor}
                   </th>
                 )
               })}
               {dentalHygienists.map((dentalHygienist, idx) => {
                 return (
-                  <th key={idx} className="sticky top-12">
+                  <th key={idx} className="sticky top-14 bg-blue-500 text-white text-lg">
                     {dentalHygienist.hygienist}
                   </th>
                 )
               })}
               {dentalAssistants.map((dentalAssistant, idx) => {
                 return (
-                  <th key={idx} className="sticky top-12">
+                  <th key={idx} className="sticky top-14 bg-blue-500 text-white text-lg">
                     {dentalAssistant.assistant}
                   </th>
                 )
@@ -268,29 +298,34 @@ export default function ShiftListPage() {
                   id="name"
                   type="text"
                   placeholder="シフト登録日付"
+                  disabled
                 />
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                   シフト種別の選択
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="name"
-                  type="text"
-                  placeholder="シフト種別の選択"
-                />
+                <select className="select w-full border-gray-300">
+                  <option disabled selected>
+                    シフト種別の選択
+                  </option>
+                  {shiftCategorys.map((shiftCategory, idx) => {
+                    return <option key={idx}>{shiftCategory.category}</option>
+                  })}
+                </select>
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                   置換文字の選択
                 </label>
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="name"
-                  type="text"
-                  placeholder="置換文字の選択"
-                />
+                <select className="select w-full border-gray-300">
+                  <option disabled selected>
+                    置換文字の選択
+                  </option>
+                  {shiftCategorys.map((shiftCategory, idx) => {
+                    return <option key={idx}>{shiftCategory.repCharacter}</option>
+                  })}
+                </select>
               </div>
             </form>
             <div className="modal-action">

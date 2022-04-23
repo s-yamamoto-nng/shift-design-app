@@ -86,7 +86,7 @@ export default function ShiftCategoryPage() {
     { category: '有給休暇', repCharacter: '有' },
     { category: '事務日', repCharacter: '事務' },
     { category: '午前/午後', repCharacter: '/' },
-    { category: '出勤だけど役割はなし', repCharacter: '/' },
+    { category: '出勤だけど役割はなし', repCharacter: '◯' },
     { category: '仙川で診療', repCharacter: '仙' },
     { category: '府中で診療', repCharacter: '府' },
   ]
